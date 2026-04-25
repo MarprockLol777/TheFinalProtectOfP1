@@ -206,7 +206,7 @@ void UpdateStudent()
         catch { Console.WriteLine("Invalid input. Please enter 1 or 2."); }
     }
 
-    Console.Write($"What is your new address? ");
+    Console.Write("What is your new address? ");
     Console.Write($"This is the last address that you entered: ({student.Address}): ");
     input = Console.ReadLine();
     if (!string.IsNullOrWhiteSpace(input)) student.Address = input;
