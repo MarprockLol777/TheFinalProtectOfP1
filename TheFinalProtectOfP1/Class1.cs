@@ -1,85 +1,39 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using TheFinalProtectOfP1;
+﻿using System.ComponentModel.DataAnnotations;
 
-
-
-var context = new MyDataContex();
-var student = new List<Student>();
-
-
-bool running = true;
-
-while (running)
+public class Student
 {
-    Console.WriteLine("1. Add Student");
-    Console.WriteLine("2. Show Students");
-    Console.WriteLine("3. Exit");
-    Console.Write("Choose option: ");
+    [Key]
+    public int Id { get; set; }
 
-    int choice = Convert.ToInt32(Console.ReadLine());
+    [StringLength(100)]
+    public string Name { get; set; }
 
-    switch (choice)
+    [StringLength(100)]
+    public string LastName { get; set; }
+
+    public int Age { get; set; }
+    public int Sex { get; set; }
+
+    [StringLength(250)]
+    public string Address { get; set; }
+
+    [StringLength(500)]          
+    public string Scores { get; set; }
+
+    public int Overall_score { get; set; }
+
+    public Student() { }
+
+    public Student(int id, string name, string lastname, int age, int sex,
+                   string address, string scores, int overall_score)
     {
-        case 1:
-            AddStudent();
-            break;
-
-        case 2:
-            ShowStudents();
-            break;
-
-        case 3:
-            running = false;
-            break;
-
-        default:
-            Console.WriteLine("Invalid option");
-            break;
-    }
-}
-
-void AddStudent()
-{
-
-    var student = new Student{ };
-
-    Console.Write("Name: ");
-    student.Name = Console.ReadLine();
-
-    Console.Write("Last Name: ");
-    student.LastName = Console.ReadLine();
-
-    Console.Write("Age: ");
-    student.Age = Convert.ToInt32(Console.ReadLine());
-
-    Console.Write("Sex (1=Male, 2=Female): ");
-    student.Sex = Convert.ToInt32(Console.ReadLine());
-
-    Console.Write("Address: ");
-    student.Address = Console.ReadLine();
-
-    Console.Write("Score: ");
-    student.Scores = Convert.ToInt32(Console.ReadLine());
-
-    Console.Write("Overall Score: ");
-    student.Overall_score = Convert.ToInt32(Console.ReadLine());
-
-
-    context.Students.Add(student);
-    context.SaveChanges();
-    
-
-    Console.WriteLine("Saved successfully!");
-}
-
-void ShowStudents()
-{
-    var student = context.Students.ToList();
-
-    foreach (var s in student)
-    {
-        Console.WriteLine($"ID: {s.Id} | {s.Name} {s.LastName} | Score: {s.Scores} | Overall: {s.Overall_score}");
+        Id = id;
+        Name = name;
+        LastName = lastname;
+        Age = age;
+        Sex = sex;
+        Address = address;
+        Scores = scores;
+        Overall_score = overall_score;
     }
 }
