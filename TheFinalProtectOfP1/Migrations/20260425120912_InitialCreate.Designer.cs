@@ -10,7 +10,7 @@ using TheFinalProtectOfP1;
 
 namespace TheFinalProtectOfP1.Migrations
 {
-    [DbContext(typeof(MyDataContex))]
+    [DbContext(typeof(MyDataContext))]
     [Migration("20260425120912_InitialCreate")]
     partial class InitialCreate
     {

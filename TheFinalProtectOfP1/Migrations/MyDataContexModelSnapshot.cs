@@ -9,7 +9,7 @@ using TheFinalProtectOfP1;
 
 namespace TheFinalProtectOfP1.Migrations
 {
-    [DbContext(typeof(MyDataContex))]
+    [DbContext(typeof(MyDataContext))]
     partial class MyDataContexModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

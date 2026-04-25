@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using TheFinalProtectOfP1;
 
-var context = new MyDataContex();
+var context = new MyDataContext();
 bool running = true;
 
 while (running)

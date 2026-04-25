@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TheFinalProtectOfP1
 {
-    public class MyDataContex : DbContext
+    public class MyDataContext : DbContext
     {
         public DbSet<Student>  Students { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
