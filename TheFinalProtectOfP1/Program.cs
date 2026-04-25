@@ -37,10 +37,6 @@ while (running)
         default: Console.WriteLine("Invalid option."); break;
     }
 }
-
-// ─────────────────────────────────────────────
-//  ADD
-// ─────────────────────────────────────────────
 void AddStudent()
 {
     var student = new Student();
@@ -55,20 +51,30 @@ void AddStudent()
     try { student.Age = Convert.ToInt32(Console.ReadLine()); }
     catch { Console.WriteLine("Invalid age, saving as 0."); student.Age = 0; }
 
-    Console.Write("Sex (1=Male, 2=Female): ");
-    try { student.Sex = Convert.ToInt32(Console.ReadLine()); }
-    catch { Console.WriteLine("Invalid input, saving as 1."); student.Sex = 1; }
-
+    bool validSex = false;
+    while (!validSex)
+    {
+        Console.Write("What is your sex? ");
+        Console.Write("Sex (1=Male, 2=Female): ");
+        try
+        {
+            int sexInput = Convert.ToInt32(Console.ReadLine());
+            if (sexInput == 1 || sexInput == 2) { student.Sex = sexInput; validSex = true; }
+            else Console.WriteLine("Only 1 or 2 allowed.");
+        }
+        catch { Console.WriteLine("Invalid input. Please enter 1 or 2."); }
+    }
+   
     Console.Write("Address: ");
     student.Address = Console.ReadLine();
 
-    // ── Recolectar notas ──────────────────────
+
     var scores = new List<int>();
     bool addingScores = true;
 
     while (addingScores)
     {
-        // Pedir nota con try/catch
+     
         int score = 0;
         bool validScore = false;
         while (!validScore)
@@ -86,7 +92,7 @@ void AddStudent()
         }
         scores.Add(score);
 
-        // Preguntar si agrega otra nota
+       
         bool validChoice = false;
         while (!validChoice)
         {
@@ -99,12 +105,12 @@ void AddStudent()
                 int option = Convert.ToInt32(Console.ReadLine());
                 if (option == 1)
                 {
-                    validChoice = true;               // sigue el while exterior
+                    validChoice = true;               
                 }
                 else if (option == 2)
                 {
                     validChoice = true;
-                    addingScores = false;             // sale del while exterior
+                    addingScores = false;             
                 }
                 else
                 {
@@ -118,7 +124,7 @@ void AddStudent()
         }
     }
 
-    // Guardar notas como "85,90,78" y calcular promedio
+ 
     student.Scores = string.Join(",", scores);
     student.Overall_score = scores.Count > 0 ? (int)scores.Average() : 0;
 
@@ -127,9 +133,6 @@ void AddStudent()
     Console.WriteLine("Student saved successfully!");
 }
 
-// ─────────────────────────────────────────────
-//  SHOW
-// ─────────────────────────────────────────────
 void ShowStudents()
 {
     var students = context.Students.ToList();
@@ -148,15 +151,12 @@ void ShowStudents()
         Console.WriteLine($"Age     : {s.Age}");
         Console.WriteLine($"Sex     : {(s.Sex == 1 ? "Male" : "Female")}");
         Console.WriteLine($"Address : {s.Address}");
-        Console.WriteLine($"Scores  : {s.Scores}");           // "85,90,78"
+        Console.WriteLine($"Scores  : {s.Scores}");         
         Console.WriteLine($"Average : {s.Overall_score}");
         Console.WriteLine("-------------------------------");
     }
 }
 
-// ─────────────────────────────────────────────
-//  UPDATE
-// ─────────────────────────────────────────────
 void UpdateStudent()
 {
     ShowStudents();
@@ -169,16 +169,19 @@ void UpdateStudent()
     var student = context.Students.Find(id);
     if (student == null) { Console.WriteLine("Student not found."); return; }
 
-    // Cada campo: si el usuario no escribe nada, se conserva el valor actual
-    Console.Write($"Name ({student.Name}): ");
+    Console.Write("What is your new name? ");
+    Console.Write($"This is the last name that you entered: ({student.Name}): ");
     string input = Console.ReadLine();
     if (!string.IsNullOrWhiteSpace(input)) student.Name = input;
 
-    Console.Write($"Last Name ({student.LastName}): ");
+    Console.Write("What is your new last name? ");
+    Console.Write($"This is the last name that you entered: ({student.LastName}): ");
     input = Console.ReadLine();
     if (!string.IsNullOrWhiteSpace(input)) student.LastName = input;
 
-    Console.Write($"Age ({student.Age}): ");
+
+    Console.Write("What is your new Age? ");
+    Console.Write($"This is the last age that you entered: ({student.Age}): ");
     input = Console.ReadLine();
     if (!string.IsNullOrWhiteSpace(input))
     {
@@ -186,19 +189,28 @@ void UpdateStudent()
         catch { Console.WriteLine("Invalid age, keeping old value."); }
     }
 
-    Console.Write($"Sex ({student.Sex}): ");
-    input = Console.ReadLine();
-    if (!string.IsNullOrWhiteSpace(input))
+
+    bool validSex = false;
+    while (!validSex)
     {
-        try { student.Sex = Convert.ToInt32(input); }
-        catch { Console.WriteLine("Invalid input, keeping old value."); }
+        Console.Write("What is your new sex? ");
+        Console.Write("(1=Male, 2=Female): ");
+        input = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(input)) break; 
+        try
+        {
+            int sexInput = Convert.ToInt32(input);
+            if (sexInput == 1 || sexInput == 2) { student.Sex = sexInput; validSex = true; }
+            else Console.WriteLine("Only 1 or 2 allowed.");
+        }
+        catch { Console.WriteLine("Invalid input. Please enter 1 or 2."); }
     }
 
-    Console.Write($"Address ({student.Address}): ");
+    Console.Write($"What is your new address? ");
+    Console.Write($"This is the last address that you entered: ({student.Address}): ");
     input = Console.ReadLine();
     if (!string.IsNullOrWhiteSpace(input)) student.Address = input;
 
-    // Preguntar si quiere actualizar las notas
     Console.WriteLine("Do you want to update scores?");
     Console.WriteLine("1. Yes");
     Console.WriteLine("2. No");
@@ -262,10 +274,7 @@ void UpdateStudent()
     Console.WriteLine("Student updated successfully!");
 }
 
-// ─────────────────────────────────────────────
-//  DELETE
-// ─────────────────────────────────────────────
-void DeleteStudent()
+    void DeleteStudent()
 {
     ShowStudents();
 

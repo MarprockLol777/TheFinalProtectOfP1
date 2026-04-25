@@ -24,8 +24,7 @@ public class Student
 
     public Student() { }
 
-    public Student(int id, string name, string lastname, int age, int sex,
-                   string address, string scores, int overall_score)
+    public Student(int id, string name, string lastname, int age, int sex, string address, string scores, int overall_score)
     {
         Id = id;
         Name = name;
