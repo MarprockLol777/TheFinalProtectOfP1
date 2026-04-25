@@ -165,7 +165,7 @@ void ShowStudents()
 
 void SearchStudent()
 {
-    Console.Write("Enter Matricula: ");
+    Console.Write("Before search a student enter the Student ID: ");
     string StudentID = Console.ReadLine();
 
     var student = context.Students.FirstOrDefault(s => s.StudentID == StudentID);
