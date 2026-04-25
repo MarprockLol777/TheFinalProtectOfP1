@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheFinalProtectOfP1;
 
@@ -11,11 +10,9 @@ using TheFinalProtectOfP1;
 namespace TheFinalProtectOfP1.Migrations
 {
     [DbContext(typeof(MyDataContext))]
-    [Migration("20260425120912_InitialCreate")]
-    partial class InitialCreate
+    partial class MyDataContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,6 +57,11 @@ namespace TheFinalProtectOfP1.Migrations
 
                     b.Property<int>("Sex")
                         .HasColumnType("int");
+
+                    b.Property<string>("StudentID")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 

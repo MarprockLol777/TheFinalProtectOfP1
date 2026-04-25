@@ -11,9 +11,10 @@ while (running)
     Console.WriteLine("====== Student Score Calculator ======");
     Console.WriteLine("1. Add Student");
     Console.WriteLine("2. Show Students");
-    Console.WriteLine("3. Update Student");
-    Console.WriteLine("4. Delete Student");
-    Console.WriteLine("5. Exit");
+    Console.WriteLine("3. Search Student");
+    Console.WriteLine("4. Update Student");
+    Console.WriteLine("5. Delete Student");
+    Console.WriteLine("6. Exit");
     Console.Write("Choose option: ");
 
     int choice;
@@ -31,9 +32,10 @@ while (running)
     {
         case 1: AddStudent(); break;
         case 2: ShowStudents(); break;
-        case 3: UpdateStudent(); break;
-        case 4: DeleteStudent(); break;
-        case 5: running = false; break;
+        case 3: SearchStudent(); break;
+        case 4: UpdateStudent(); break;
+        case 5: DeleteStudent(); break;
+        case 6: running = false; break;
         default: Console.WriteLine("Invalid option."); break;
     }
 }
@@ -46,6 +48,9 @@ void AddStudent()
 
     Console.Write("Last Name: ");
     student.LastName = Console.ReadLine();
+
+    Console.Write("Student ID: ");
+    student.StudentID = Console.ReadLine();
 
     Console.Write("Age: ");
     try { student.Age = Convert.ToInt32(Console.ReadLine()); }
@@ -148,6 +153,7 @@ void ShowStudents()
         Console.WriteLine("-------------------------------");
         Console.WriteLine($"ID      : {s.Id}");
         Console.WriteLine($"Name    : {s.Name} {s.LastName}");
+        Console.WriteLine($"Student ID: {s.StudentID}");
         Console.WriteLine($"Age     : {s.Age}");
         Console.WriteLine($"Sex     : {(s.Sex == 1 ? "Male" : "Female")}");
         Console.WriteLine($"Address : {s.Address}");
@@ -156,6 +162,27 @@ void ShowStudents()
         Console.WriteLine("-------------------------------");
     }
 }
+
+void SearchStudent()
+{
+    Console.Write("Enter Matricula: ");
+    string StudentID = Console.ReadLine();
+
+    var student = context.Students.FirstOrDefault(s => s.StudentID == StudentID);
+    if (student == null) { Console.WriteLine("Student not found."); return; }
+
+    Console.WriteLine("-------------------------------");
+    Console.WriteLine($"ID      : {student.Id}");
+    Console.WriteLine($"Name    : {student.Name} {student.LastName}");
+    Console.WriteLine($"Student ID: {student.StudentID}");
+    Console.WriteLine($"Age     : {student.Age}");
+    Console.WriteLine($"Sex     : {(student.Sex == 1 ? "Male" : "Female")}");
+    Console.WriteLine($"Address : {student.Address}");
+    Console.WriteLine($"Scores  : {student.Scores}");
+    Console.WriteLine($"Average : {student.Overall_score}");
+    Console.WriteLine("-------------------------------");
+}
+
 
 void UpdateStudent()
 {
@@ -179,6 +206,10 @@ void UpdateStudent()
     input = Console.ReadLine();
     if (!string.IsNullOrWhiteSpace(input)) student.LastName = input;
 
+    Console.Write("What is your new Student ID? ");
+    Console.Write($"This is the last student ID that you entered: ({student.StudentID}): ");
+    input = Console.ReadLine();
+    if (!string.IsNullOrWhiteSpace(input)) student.StudentID = input;
 
     Console.Write("What is your new Age? ");
     Console.Write($"This is the last age that you entered: ({student.Age}): ");

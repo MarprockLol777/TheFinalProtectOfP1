@@ -11,6 +11,9 @@ public class Student
     [StringLength(100)]
     public string LastName { get; set; }
 
+    [StringLength(30)]
+    public string StudentID { get; set; }
+
     public int Age { get; set; }
     public int Sex { get; set; }
 
@@ -24,11 +27,12 @@ public class Student
 
     public Student() { }
 
-    public Student(int id, string name, string lastname, int age, int sex, string address, string scores, int overall_score)
+    public Student(int id, string name,string lastname, string studentID, int age, int sex, string address, string scores, int overall_score)
     {
         Id = id;
         Name = name;
         LastName = lastname;
+        StudentID = studentID;
         Age = age;
         Sex = sex;
         Address = address;
